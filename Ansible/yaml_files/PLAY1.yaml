@@ -1,0 +1,191 @@
+#Ansibel playbook file name = play1.yaml
+---
+- name: PLAY1
+  hosts: web
+  become: yes
+  tasks:
+    - name: "task 1: create a blank file"
+      ansible.builtin.file:
+        path: /home/ubuntu/hello.txt
+        state: touch
+
+    - name: "task 2: create a folder - folder1"
+      ansible.builtin.shell: mkdir /home/ubuntu/folder1
+      tags:
+        - newfolder
+    - name: "task 2.1: create a folder - folder2"
+      ansible.builtin.shell: mkdir /home/ubuntu/folder2
+      tags:
+        - newfolder
+
+    - name: "task 3: copy a file"
+      ansible.builtin.copy:
+        src: /home/ubuntu/createfolder.sh
+        dest: /home/ubuntu/
+      tags:
+        - copy
+    - name: "task 3.1: copy a file"
+      ansible.builtin.copy:
+        src: /home/ubuntu/createfolder2.sh
+        dest: /home/ubuntu/
+      tags:
+        - copy
+    - name: "task 4: set permission chmod"
+      ansible.builtin.shell: chmod 777 /home/ubuntu/createfolder.sh
+      tags:
+        - permission
+    - name: "task 4: set permission chmod"
+      ansible.builtin.shell: chmod 777 /home/ubuntu/createfolder2.sh
+      tags:
+        - permission
+    - name: "task 5: execute shell script"
+      ansible.builtin.shell: /home/ubuntu/createfolder.sh
+      tags:
+        - script
+    - name: "task 6: move file"
+      ansible.builtin.shell: mv /home/ubuntu/hello.txt /home/ubuntu/folder1
+      tags:
+        - move
+    - name: "task7: create folder with 'script' module"
+      ansible.builtin.script: /home/ubuntu/createfolder2.sh
+      tags:
+        - scriptmod
+    - name: "task 8: Create a new directory recursively (If Parent Directory does not exist)"
+      ansible.builtin.file:
+        path: /home/ubuntu/folder6/subfolder6.1
+        state: directory
+        mode: '0755'
+        recurse: yes
+      tags:
+        - recursive
+    - name: "task9: create multiple folders with in same line"
+      ansible.builtin.shell: mkdir folder7 folder8
+      tags:
+        - multifolder
+ 
+ 
+-----------------------------------------------------------------
+Filename: hosts
+
+[web]
+13.233.106.253
+
+[web:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/home/ubuntu/education.pem
+
+
+-----------------------------------------------------------------
+Task: execut shell script
+Filename: createfolder.sh
+command: ansible-playbook --inventory hosts  play1.yaml  --tags script
+---------------------------
+	mkdir /home/ubuntu/folder3
+
+
+Filename: createfolder2.sh
+command: ansible-playbook --inventory hosts  play1.yaml  --tags script
+---------------------------
+	mkdir /home/ubuntu/folder4 /home/ubuntu/folder5
+
+
+-----------------------------------------------------------------
+-------------------------------------------------------------------
+Task: syntax check
+command: ansible-playbook --inventory hosts play1.yaml --syntax-check
+
+Task: run entire playbook:
+command: ansible-playbook --inventory hosts play1.yaml
+
+Task: run specific task: run with tags
+Command: ansible-playbook --inventory hosts play1.yaml --tags newfolder
+
+Task: copy a file
+command: ansible-playbook --inventory hosts play1.yaml --tags copy
+
+Task: set permission
+commmand: ansible-playbook --inventory hosts play1.yaml --tags permission
+
+Task: Move file
+command: ansible-playbook --inventory hosts play1.yaml --tags move
+
+Task: task create folder with 'script' module
+command: ansible-playbook --inventory hosts play1.yaml --tags copy,permission,scriptmod
+
+Task: Create a new directory recursively (If Parent Directory does not exist)
+command: ansible-playbook --inventory hosts play1.yaml --tags recursive
+
+Task: create multiple folders with in same line
+command: ansible-playbook --inventory hosts play1.yaml --tags multifolder
+
+-----------------------------------------------------------------
+Further Learning
+-----------------
+handler - are just like regula rask in an ansibel playbook but are only run if the task 
+contain a notify directive and also indicates hat it changed something.
+--- #handlers playbook
+- host: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: Install httpd server
+      action: you name=httpd state=installed
+      notify: restart httpd
+  handlers:
+    - name: restart httpd
+      action: service name=httpd state=restarted
+ # dryrun
+ # ansible-playbook handler.yml --check
+ 
+-------------------------------
+Loop - smetiem you want to repeat a task multiple times. 
+--- #my loops plyabook
+- host: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: add a list of users
+      users: name="{{ item }}" state=present
+      with_items:
+        - Deep
+        - Monu
+        - Deepu
+        - Raju
+# run
+# ansible-playbook loops.yml
+# check uers
+# cat /etc/passwd
+
+-------------------------------
+Codition
+--- #condition.yml
+- host: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install apache on debian
+      command: apt-get -y install apache2
+      when: ansible_os_family == "Debian"
+    - name: install apache for redat
+      command: yum -y install httpd
+      when: ansible_os_family == "RedHat"
+# usage
+# ansible-playbook condition.yml
+
+-------------------------------
+Vault
+--- #vault.yml
+ansible-vaul create vault.yml # create a new file
+ansible-vault edit vault.yml # edit file
+ansible-vault rekey vault.yml # reset key
+ansible-vault encrypt target.yml # encrypt non encrypted existing file
+ansible-vault decrypt target.yml # remove encrypted key. make it normal file
+ 
+
+ 
+
+
+

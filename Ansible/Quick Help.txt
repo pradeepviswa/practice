@@ -1,0 +1,33 @@
+Install Ansible:
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt-get install -y ansible
+ansible --version
+
+mkdir linuxyaml
+
+		
+Copy files from etc to pwd:
+cp /etc/ansible/ansible.cfg .
+ansible-config init --disabled > ansible.cfg
+
+create blank host file:
+touch hosts
+
+Find and replace in file: 
+sed -i 's/host_key_checking=True/host_key_checking=False/g' ansible.cfg
+
+File copy From MambaXterm:
+cd "/drives/c/Data/Practice/office"
+scp -i login.pem login.pem ubuntu@3.6.189.102:/home/ubuntu
+sudo chmod 600 login.pem
+
+
+cd "/drives/c/Data/Practice/office/LinuxYAML"
+scp -i login.pem ./change_directory.yml ubuntu@35.154.193.65:/home/ubuntu/linuxyaml
+
+scp -i login.pem hostfile  ubuntu@35.154.193.65:/home/ubuntu/
+
+
+

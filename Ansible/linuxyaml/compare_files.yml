@@ -1,0 +1,72 @@
+---
+- name: Compare 2 files
+  hosts: "{{ host_group }}"
+  connection: ssh
+  become: yes
+  #user: ansible
+  tasks:
+    - name: Check if two files are provided
+      fail:
+        msg: "Error: Two files are required in file1 and file2 variables"
+      when: file1 is undefined or file2 is undefined
+      
+    - name: Check if files exists
+      stat:
+        path: "{{ item }}"
+      register: stat_results
+      ignore_errors: True
+      with_items:
+        - "{{ file1 }}"
+        - "{{ file2 }}"
+        
+    - name: Report if files exists
+      debug:
+        msg: "The file or directory exists: {{ file1 }}"
+      with_items: "{{ stat_results.results }}"
+      when: item.stat.exists
+      ignore_errors: True
+      
+    - name: Report missing file
+      fail:
+        msg: "File or directory doesn't exists: {{ item.item }}"
+      with_items: "{{ stat_results.results }}"
+      when: not item.stat.exists
+      
+      
+    - name: Execute 'diff' directly if no 'option' provided
+      command: diff "{{ file1 }}" "{{ file2 }}"
+      register: diff_output
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+      when: option is undefined
+
+    - name: Execute 'diff' when 'option' provided
+      command: diff "{{ option }}" "{{ file1 }}" "{{ file2 }}"
+      register: diff_output_option
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+      when: option is defined
+      
+    - name: Check for difference in both files output when option is undefined
+      debug:
+        msg: "{{ diff_output.stdout_lines }}"
+      when: option is undefined
+     
+
+    - name: Check for difference in both files output when option is defined
+      debug:
+        msg: "{{ diff_output_option.stdout_lines }}"
+      when: option is defined
+     
+
+ # check if files created or not
+ #ansible --inventory hosts all -a "ls -lrt"
+ 
+ # usage
+ # ansible-playbook --inventory hosts play.yml --extra-vars "host_group='dev' file1='file1.txt' file2='file2.txt'"
+ #with 'option'
+ # ansible-playbook --inventory hosts play.yml --extra-vars "host_group='dev' file1='file1.txt' file2='file2.txt' option='-b'"
+
+

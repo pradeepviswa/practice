@@ -1,0 +1,28 @@
+---
+- name: change permission
+  hosts: "{{ host_group }}"
+  become: yes
+  #user: ansible
+  #connection: ssh
+  tasks:
+    - name: Change file/directory permission
+      file:
+        path: "{{ file_path }}"
+        mode: "{{ mode }}"
+      register: result
+      ignore_errors: yes
+    
+    - name: Check for errors
+      debug:
+        msg: "An error occured while changing permissions: {{ result.msg }}"
+      when: result is failed
+
+#create empty file first
+# ansible --inventory hosts all -a "touch /home/ubuntu/temp.txt"
+ 
+# usage
+# ansible-playbook --inventory hosts change_permission.yml --extra-vars "file_path='/home/ubuntu/temp.txt' mode='777' host_group='dev'"
+
+# check
+# ansible --inventory hosts all -a "ls -lrt /home/ubuntu"
+

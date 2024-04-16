@@ -1,0 +1,23 @@
+---
+- name: change directory
+  hosts: "{{ host_group }}"
+  become: yes
+  tasks:
+    - name: change directory
+      shell: cd "{{ path_to_dir }}"
+      ignore_errors: yes
+      register: cd_result
+      
+    - name: Check if directory change was successful
+      debug:
+        msg: "Directory change successful"
+      when: cd_result.rc == 0
+
+    - name: Handle directory change failure
+      debug:
+        msg: "Failed to change directory: {{ path_to_dir }}"
+      when: cd_result.rc != 0     
+
+# usage
+# ansible-playbook --inventory hosts play2.yml --extra-vars "path_to_dir='/home/ubuntu' host_group='dev'"
+
