@@ -1,0 +1,4 @@
+DeploymentName,DeviceCollection,AvailableTime, DeadLineTime,Status
+PowerShell Test SUG Nov,SDB Non Prod Servers 1,1/18/2018 11:00,1/18/2018 21:00,Failed: Error: SUG Deployment error. Check device-collection name. No object corresponds to the specified parameters.
+PowerShell Test SUG Nov,SDB Non Prod Servers,1/18/2018 11:00,1/18/2018 21:00,Failed: Error: Invalid Software-Update-Group Name 'SUG-Nov-2017 1'. 
+PowerShell Test SUG Nov,SDB Non Prod Servers,1/18/2018 11:00,1/18/2018 21:00,Deployed

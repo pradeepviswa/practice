@@ -1,0 +1,3 @@
+dir "C:\Data\Medical Claim\Sabi-20230928T111008Z-001\Sabi\During Admit" | .\ConvertTo-Jpeg.ps1
+dir "C:\Data\Medical Claim\Sabi-20230928T111008Z-001\Sabi\Post Admit" | .\ConvertTo-Jpeg.ps1
+dir "C:\Data\Medical Claim\Sabi-20230928T111008Z-001\Sabi\Pre Admit" | .\ConvertTo-Jpeg.ps1

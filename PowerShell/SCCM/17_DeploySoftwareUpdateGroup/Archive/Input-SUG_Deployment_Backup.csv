@@ -1,0 +1,4 @@
+deviceCollection,SUGName,DeploymentName,description,AvailableTime,DeadlineTime
+SDB Non Prod Servers 1,SUG-Nov-2017,PowerShell Test SUG Nov,PowerShell test on SUG deployment,1/18/2018 11:00,1/18/2018 21:00
+SDB Non Prod Servers,SUG-Nov-2017 1,PowerShell Test SUG Nov,PowerShell test on SUG deployment,1/18/2018 11:00,1/18/2018 21:00
+SDB Non Prod Servers,SUG-Nov-2017,PowerShell Test SUG Nov,PowerShell test on SUG deployment,1/18/2018 11:00,1/18/2018 21:00
