@@ -1,2 +1,5 @@
 terraform apply --auto-approve
 terraform destroy --auto-approve
+terraform state
+terraform apply -var-file example.tfvar --auto-approve
+terraform apply -var "subnet_prefix=10.0.0.0/24"
