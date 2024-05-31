@@ -1,4 +1,4 @@
-Function utilGet-WebPageTitle{
+Function Get-WebPageTitle{
 [CmdLetBinding()]
 param(
 [Parameter(mandatory=$true, ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
@@ -32,6 +32,6 @@ param(
 
     Return $retValue
 
-}#utilGet-WebPageTitle
+}#Get-WebPageTitle
 
-utilGet-WebPageTitle
+Get-WebPageTitle -url youtube.com
