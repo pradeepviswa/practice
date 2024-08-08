@@ -1,0 +1,12 @@
+IDE - Integrated Development Environment
+OOP - Onject Oriented Programming
+UX - User Experience
+JSON - JavaScript Object Notation
+FIFO - First In First Out
+LIFO - Last In First Out
+TDD - Test Driven Development
+SaaS - Softwar as a Service
+PaaS - Plaform as a Service
+IaaS - Infrastructure as a Service
+ML - Machine Learning
+AND - Andaman Nikobar Land
