@@ -15,10 +15,6 @@ crash.log
 # ---- Terraform Plan Files ----
 *.tfplan
 
-# ---- Terraform Sensitive Variable Files ----
-*.tfvars
-*.tfvars.json
-
 # ---- Terraform Override Files ----
 override.tf
 override.tf.json
