@@ -1,0 +1,6 @@
+FROM ubuntu:latest
+RUN apt update -y
+RUN apt install apache2 -y
+RUN echo "<html><h1> Pradeep Website </h1></html>" | tee /var/www/html/index.html
+EXPOSE 80
+CMD ["apache2ctl","-D","FOREGROUND"]

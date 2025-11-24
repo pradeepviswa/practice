@@ -1,0 +1,47 @@
+*.pem
+rootkey.csv
+donotupload.txt
+terraform.tfstate.*
+*backup*
+*.pub
+.terraform.lock.hcl
+.terraform/
+
+# ---- Terraform Local State ----
+terraform.tfstate
+terraform.tfstate.*
+crash.log
+
+# ---- Terraform Plan Files ----
+*.tfplan
+
+# ---- Terraform Sensitive Variable Files ----
+*.tfvars
+*.tfvars.json
+
+# ---- Terraform Override Files ----
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ---- Terraform Directory (providers, modules, plugins) ----
+.terraform/
+.terraform.lock.hcl
+
+# ---- SSH Keys / Credentials ----
+*.pem
+*.key
+*.pub
+rootkey.csv
+
+# ---- Backup / Temp Files ----
+*backup*
+*.bak
+*.tmp
+
+# ---- OS / Editor Files ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
