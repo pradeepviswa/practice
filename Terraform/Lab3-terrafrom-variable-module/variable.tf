@@ -15,7 +15,12 @@ variable vm_name{
     default = ""
 }
 
-variable "env" {
+variable "key_name_vm" {
   type = string
   default = ""
+}
+
+variable "count_vm" {
+  type = number
+  default = 1
 }

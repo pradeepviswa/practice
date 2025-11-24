@@ -13,11 +13,12 @@ provider "aws" {
 
 
 
-module "vm_instance" {
+module "vm" {
     # source = "./modules/vm"
     source = "git::https://github.com/pradeepviswa/tfmodules.git//vm"
     ami_id = var.ami_id
     instance_type = var.instance_type
     vm_name = var.vm_name
-    env = var.env
+    key_name_vm = var.key_name_vm
+    count_vm = var.count_vm
 }

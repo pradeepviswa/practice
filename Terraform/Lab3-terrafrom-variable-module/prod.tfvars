@@ -5,4 +5,6 @@ instance_type = "t3.micro"
 
 vm_name = "prod-WebServer1"
 
-env = "prod"
+key_name_vm = "key_l"
+
+count_vm = 1
